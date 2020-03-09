@@ -1,0 +1,124 @@
+{% extends "bootstrap/base.html" %} {% block title %} Home {% endblock %} {%
+block styles %} {{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='style.css')}}" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+{% endblock %} {% block content %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand active" href="/"><img src=" /static/images/Odin Wolf.png"
+          style="width: 70px; height: 32px;"></a>
+    </div>
+    <div class=" collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+        {% if session.get('user') == None %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+        {% else %}
+        <li><a href="{{ url_for('logout') }}">Logout: {{ session.get('user') }}</a></li>
+        <li><a href="{{ url_for('cart') }}">Cart</a></li>
+        <li><a href="{{ url_for('purchases') }}">My purchases</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible show main-alert" role="alert">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{ message }}
+</div>
+{% endfor %}
+
+<!-- Navbar Section End -->
+<!-- Header Section Start -->
+<header class="header">
+  <div class="text-box">
+    <h1 class="heading-primary">
+      <span class="heading-primary-main">Odin Wolf Perica</span>
+      <span class="heading-primary-sub">Web Developer</span>
+    </h1>
+  </div>
+</header>
+
+<div id="about">
+  <div class="container">
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Hi, am Odin Wolf Perica. <span class="text-muted">A Web Developer.</span>
+        </h2>
+        <p class="lead">With coding i've acquired problem-solving skills and a way to communicate with others on a
+          technical level. I'd love to work in a tech company, with artists, athletes, photographers, non-profits, and
+          small businesses to improve their businesses through web.
+        </p class="lead">
+        <p>Thank you for visiting my website and feel free to contact me if you have any questions</p>
+
+      </div>
+      <div class="col-md-5">
+        <img>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center">
+  <h2 class="section-title">Pricing</h2>
+  <div class="intro">Buy one of our courses</div>
+  <div class="pricing-wrapper row">
+    {% for i in products %}
+    <div class="item item-{{ products.index(i)+1 }} col-md-4 col-12">
+      <div class="item-inner">
+        <h3 class="item-heading">{{ i.name }}<br><span class="item-heading-desc"></span></h3>
+        <div class="price-figure">
+          <span class="currency">$</span><span class="number">{{ i.price }}</span>
+        </div>
+        <!--//price-figure-->
+        <ul class="list-unstyled mb-3">
+          <li class="mb-2">{{ i.description }}</li>
+
+        </ul>
+
+        <a class="btn btn-cta" href="/add/{{ products.index(i) + 1 }}">Buy
+          Now</a>
+
+      </div>
+      <!--//item-inner-->
+    </div>
+    {% endfor %}
+  </div>
+  <!--//pricing-wrapper-->
+
+</div>
+<!--//container-->
+<footer>
+  <div id="footer-above">
+    <div>
+      <h3>Find me on</h3>
+      <ul id="contact">
+        <li><a class="button social" href="https://www.linkedin.com/in/odin-wolf-perica-b7b99ba4/" target="_blank"><i
+              class="fa fa-fw fa-linkedin"></i></a></li>
+        <li><a class="button social" href="#" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+        <li><a class="button social" href="https://www.facebook.com/odin.perica" target="_blank"><i
+              class="fa fa-facebook-official"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+{% endblock %}
